@@ -2,13 +2,15 @@ import React from "react";
 import { Container, PokemonNumber, PokemonName, PokemonType, TypesContainer, Pokeball, CatchButton, Pokemon, BtnDetains } from "./styles";
 import pokeball from "../../assets/pngwing2.png"
 import {getTypes} from "../../utils/ReturnPokeType"
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { goToDetails } from "../../routes/coordinator";
 import { getColors } from "../../utils/ReturnCardColor";
 
 
-const PokemonCard = ({pokemon, types, addCard, id}) => {
+
+const PokemonCard = ({pokemon, types, addCard, id, removeCard}) => {
     const navigate = useNavigate()
+    const location = useLocation()
 
     const pokemonFilterColor = types.map((types) => {
         return (
@@ -33,7 +35,13 @@ const PokemonCard = ({pokemon, types, addCard, id}) => {
                     src={pokemon.sprites.other["official-artwork"].front_default
                     }
                     alt="" />
-                <CatchButton onClick={()=>addCard(id)}> Capturar!</CatchButton>
+                <>  
+                    {location.pathname === "/" ? (
+                        <CatchButton onClick={() => {addCard(id)}}>Capturar!</CatchButton>
+                    ) : (
+                        <CatchButton onClick={() => {removeCard(id)}}>Excluir</CatchButton>
+                    )}
+                </>  
             </div>
             <Pokeball 
                 src={pokeball}
