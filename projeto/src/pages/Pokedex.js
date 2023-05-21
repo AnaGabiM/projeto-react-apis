@@ -1,19 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { CardsContainer } from "../styles";
-import PokedexCard from "../components/PokemonCard/PokedexCard";
+import PokemonCard from "../components/PokemonCard/PokemonCard";
+import { GlobalContext } from "../context/GlobalContext";
 
 
-export default function Pokedex ({listCards, setListCards}) {
+export default function Pokedex () {
+    const context = useContext(GlobalContext)
+    const { listCards, removeCard} = context;
     
-    function removeCard (id) {
-        const newList = listCards.filter((item) => item.id !== id);
-        setListCards(newList)
-    }
-
     return (
         <CardsContainer>
             {listCards.map((poke) => {
-                return <PokedexCard
+                return <PokemonCard
                 key={poke.id}
                 pokemon={poke}
                 types={poke.types}
